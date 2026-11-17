@@ -1,0 +1,3 @@
+symbol,timestamp,source,period_type,revenue,net_income,eps,roe,operating_cash_flow
+AAPL,2025-12-31T00:00:00Z,mock_csv,annual,100000000,20000000,5.00,0.25,25000000
+MSFT,2025-12-31T00:00:00Z,mock_csv,annual,200000000,40000000,8.00,0.30,50000000

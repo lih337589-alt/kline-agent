@@ -1,0 +1,28 @@
+#!/bin/sh
+# 提交前拦截误加的密钥文件与硬编码 key。
+# 启用方式：git config core.hooksPath .githooks
+
+fail() {
+    printf '\n[pre-commit] 拒绝提交：%s\n\n' "$1" >&2
+    exit 1
+}
+
+# 1. 禁止提交 .env 及其变体（.env.example 允许）
+staged_env=$(git diff --cached --name-only --diff-filter=ACM \
+    | grep -E '(^|/)\.env(\.(local|development|production|staging))?$')
+if [ -n "$staged_env" ]; then
+    printf '%s\n' "$staged_env" >&2
+    fail "检测到 .env 文件，密钥只应存在于本地环境变量中"
+fi
+
+# 2. 禁止提交常见格式的硬编码密钥
+added_lines=$(git diff --cached -U0 --diff-filter=ACM -- . \
+    ':(exclude)*.lock' ':(exclude)package-lock.json' ':(exclude).githooks/pre-commit' \
+    | grep -E '^\+' \
+    | grep -E 'sk-[A-Za-z0-9]{16,}|AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----')
+if [ -n "$added_lines" ]; then
+    printf '%s\n' "$added_lines" >&2
+    fail "检测到疑似硬编码密钥，请改用环境变量读取"
+fi
+
+exit 0

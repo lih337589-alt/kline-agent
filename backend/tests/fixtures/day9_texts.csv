@@ -1,0 +1,6 @@
+published_at,symbol,source,source_url,category,title,content
+2026-09-07T13:00:00Z,AAPL,day9_sample,https://example.test/aapl/announcement-001,announcement,Apple board update,"Sample announcement text used only for local ingestion testing."
+2026-09-08T14:00:00Z,AAPL,day9_sample,https://example.test/aapl/news-001,news,Apple product demand update,"Sample news text with     extra spaces for normalization testing."
+2026-09-09T15:00:00Z,AAPL,day9_sample,https://example.test/aapl/news-002,news,Apple supply chain update,"Sample news text for the recent evidence pipeline."
+2026-09-08T14:00:00Z,AAPL,day9_sample,https://example.test/aapl/news-001,news,Apple product demand update,"Duplicate row that should not be inserted twice."
+2026-09-10T15:00:00Z,MSFT,day9_sample,https://example.test/msft/research-001,research,Microsoft research note,"Sample research text used for category normalization testing."
